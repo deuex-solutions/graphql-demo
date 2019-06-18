@@ -1,0 +1,160 @@
+query {
+
+    stats ( interval, filters ) {
+
+        interval
+        filters
+
+        orderCount
+        grossAmount
+        netAmount
+
+        recurringOrderCount
+        recurringGrossAmount
+        recurringNetAmount
+
+        customerCount
+
+        refundCount
+        refundAmount
+
+        averageRevenuePerDay
+        averageRevenuePerCustomer
+        averageRevenuePerOrder
+    }
+
+    summary ( interval, filters, groupBy, sortBy, limit ) {
+        interval
+        filters
+        groupBy
+        sortBy
+        limit
+        
+        stats {
+            grouping
+
+            orderCount
+            grossAmount
+            netAmount
+
+            customerCount
+
+            refundCount
+            refundAmount
+        }
+    }
+
+    orders ( interval, filters, sortBy, after, limit ) {
+        first
+        after
+        last
+        before
+
+        sortBy
+
+        edges {
+            cursor
+            node {
+                id
+                type
+                status
+                orderDate
+
+                customer {
+                    id
+                    name
+                    avatar
+                }
+
+                geo {
+                    city
+                    state
+                    country
+                }
+
+                items {
+                    quantity
+                    product {
+                        ... on Product {
+                        name
+                        id
+                        }
+                        ... on ProductVariant {
+                        name
+                        id
+                        }
+                    }
+                }
+
+                netAmount
+            }
+        }
+    }
+
+    products ( interval, filters, sortBy, after, limit ) {
+        first
+        after
+        last
+        before
+
+        sortBy
+
+        edges {
+            cursor
+            node {
+                ... on Product {
+                name
+                id
+                }
+                ... on ProductVariant {
+                name
+                id
+                }
+            }
+        }
+    }
+
+    filters ( category ) {
+        field
+        name
+        type
+        valueList {
+            name
+            value
+        }
+    }
+    
+    facets ( category, interval, filters ) {
+        name
+        type
+        field
+        values {
+            ... on FacetTerm {
+                name
+                value
+                count
+                children {
+                    name
+                    value
+                }
+            }
+
+            ... on FacetNumericRange {
+                name
+                value
+                count
+                numStart: start 
+                numEnd: end
+            }
+
+            ... on FacetDateRange {
+                name
+                value
+                count
+                dateStart:start
+                dateEnd:end
+            }
+        }
+    }
+}
+
