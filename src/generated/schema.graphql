@@ -6,13 +6,18 @@ input InputFilter {
   filter: JSON
 }
 
+input InputInterval {
+  interval: JSON
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
 scalar JSON
 
 type Query {
-  stats(filters: InputFilter, interval: InputFilter): Stats
+  stats(filters: InputFilter, interval: InputInterval): Stats
+  summary(filters: InputFilter, groupBy: String, interval: InputInterval, limit: Int, sortBy: String): Summary
 }
 
 type Stats {
@@ -22,6 +27,7 @@ type Stats {
   customerCount: Int
   filters: JSON
   grossAmount: Int
+  grouping: String
   interval: JSON
   netAmount: Int
   orderCount: Int
@@ -30,4 +36,13 @@ type Stats {
   recurringOrderCount: Int
   refundAmount: Int
   refundCount: Int
+}
+
+type Summary {
+  filters: JSON
+  groupBy: String
+  interval: JSON
+  limit: Int
+  sortBy: String
+  stats: Stats
 }

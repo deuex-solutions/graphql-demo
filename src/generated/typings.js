@@ -16,6 +16,9 @@ export interface NexusGenInputs {
   InputFilter: { // input type
     filter?: any | null; // JSON
   }
+  InputInterval: { // input type
+    interval?: any | null; // JSON
+  }
 }
 
 export interface NexusGenEnums {
@@ -30,6 +33,7 @@ export interface NexusGenRootTypes {
     customerCount?: number | null; // Int
     filters?: any | null; // JSON
     grossAmount?: number | null; // Int
+    grouping?: string | null; // String
     interval?: any | null; // JSON
     netAmount?: number | null; // Int
     orderCount?: number | null; // Int
@@ -38,6 +42,14 @@ export interface NexusGenRootTypes {
     recurringOrderCount?: number | null; // Int
     refundAmount?: number | null; // Int
     refundCount?: number | null; // Int
+  }
+  Summary: { // root type
+    filters?: any | null; // JSON
+    groupBy?: string | null; // String
+    interval?: any | null; // JSON
+    limit?: number | null; // Int
+    sortBy?: string | null; // String
+    stats?: NexusGenRootTypes['Stats'] | null; // Stats
   }
   String: string;
   Int: number;
@@ -49,11 +61,13 @@ export interface NexusGenRootTypes {
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
   InputFilter: NexusGenInputs['InputFilter'];
+  InputInterval: NexusGenInputs['InputInterval'];
 }
 
 export interface NexusGenFieldTypes {
   Query: { // field return type
     stats: NexusGenRootTypes['Stats'] | null; // Stats
+    summary: NexusGenRootTypes['Summary'] | null; // Summary
   }
   Stats: { // field return type
     averageRevenuePerCustomer: number | null; // Int
@@ -62,6 +76,7 @@ export interface NexusGenFieldTypes {
     customerCount: number | null; // Int
     filters: any | null; // JSON
     grossAmount: number | null; // Int
+    grouping: string | null; // String
     interval: any | null; // JSON
     netAmount: number | null; // Int
     orderCount: number | null; // Int
@@ -71,13 +86,28 @@ export interface NexusGenFieldTypes {
     refundAmount: number | null; // Int
     refundCount: number | null; // Int
   }
+  Summary: { // field return type
+    filters: any | null; // JSON
+    groupBy: string | null; // String
+    interval: any | null; // JSON
+    limit: number | null; // Int
+    sortBy: string | null; // String
+    stats: NexusGenRootTypes['Stats'] | null; // Stats
+  }
 }
 
 export interface NexusGenArgTypes {
   Query: {
     stats: { // args
       filters?: NexusGenInputs['InputFilter'] | null; // InputFilter
-      interval?: NexusGenInputs['InputFilter'] | null; // InputFilter
+      interval?: NexusGenInputs['InputInterval'] | null; // InputInterval
+    }
+    summary: { // args
+      filters?: NexusGenInputs['InputFilter'] | null; // InputFilter
+      groupBy?: string | null; // String
+      interval?: NexusGenInputs['InputInterval'] | null; // InputInterval
+      limit?: number | null; // Int
+      sortBy?: string | null; // String
     }
   }
 }
@@ -87,9 +117,9 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Query" | "Stats";
+export type NexusGenObjectNames = "Query" | "Stats" | "Summary";
 
-export type NexusGenInputNames = "InputFilter";
+export type NexusGenInputNames = "InputFilter" | "InputInterval";
 
 export type NexusGenEnumNames = never;
 

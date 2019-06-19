@@ -1,11 +1,11 @@
 import { objectType, arg } from 'nexus';
-import Utils from '../utils/Utils';
+import SchemaUtils from './SchemaUtils';
 
 export const Stats = objectType({
     name: "Stats",
     definition(t) {
-        t.field("interval", { type: Utils.JSON, nullable: true })
-        t.field("filters", { type: Utils.JSON, nullable: true })
+        t.field("interval", { type: SchemaUtils.JSON, nullable: true })
+        t.field("filters", { type: SchemaUtils.JSON, nullable: true })
 
         t.int("orderCount", { nullable: true })
         t.int("grossAmount", { nullable: true })
@@ -23,5 +23,8 @@ export const Stats = objectType({
         t.int("averageRevenuePerDay", { nullable: true })
         t.int("averageRevenuePerCustomer", { nullable: true })
         t.int("averageRevenuePerOrder", { nullable: true })
+
+        //used by summary schema
+        t.string("grouping", { nullable: true })
     }
 });

@@ -1,6 +1,7 @@
-import { objectType, arg } from 'nexus';
-import Utils from '../utils/Utils';
+import { objectType, arg, stringArg, intArg } from 'nexus';
+import SchemaUtils from './SchemaUtils';
 import { Stats } from './Stats';
+import { Summary } from './Summary';
 
 export const Query = objectType({
     name: "Query",
@@ -9,8 +10,19 @@ export const Query = objectType({
             type: Stats,
             nullable: true,
             args: {
-                interval: arg({ type: Utils.InputFilter }),
-                filters: arg({ type: Utils.InputFilter })
+                interval: arg({ type: SchemaUtils.InputInterval }),
+                filters: arg({ type: SchemaUtils.InputFilter })
+            }
+        });
+        t.field("summary", {
+            type: Summary,
+            nullable: true,
+            args: {
+                interval: arg({ type: SchemaUtils.InputInterval }),
+                filters: arg({ type: SchemaUtils.InputFilter }),
+                groupBy: stringArg(),
+                sortBy: stringArg(),
+                limit: intArg()
             }
         });
     }

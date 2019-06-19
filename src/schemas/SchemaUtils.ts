@@ -9,7 +9,15 @@ const InputFilter = inputObjectType({
     }
 });
 
+const InputInterval = inputObjectType({
+    name: "InputInterval",
+    definition(t) {
+        t.field("interval", { type: JSON })
+    }
+});
+
 export default {
     InputFilter,
+    InputInterval,
     JSON
 };
