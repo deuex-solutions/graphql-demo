@@ -44,12 +44,7 @@ query {
         }
     }
 
-    orders ( interval, filters, sortBy, after, limit ) {
-        first
-        after
-        last
-        before
-
+    orders ( interval, filters, sortBy, first, after, limit ) {
         sortBy
 
         edges {
@@ -89,14 +84,14 @@ query {
                 netAmount
             }
         }
+        pageInfo {
+            endCursor
+            hasNextPage
+        }
+        totalCount
     }
 
-    products ( interval, filters, sortBy, after, limit ) {
-        first
-        after
-        last
-        before
-
+    products ( interval, filters, sortBy, first, after, limit ) {
         sortBy
 
         edges {
@@ -112,6 +107,11 @@ query {
                 }
             }
         }
+        pageInfo {
+            endCursor
+            hasNextPage
+        }
+        totalCount
     }
 
     filters ( category ) {

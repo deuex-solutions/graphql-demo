@@ -22,9 +22,74 @@ export interface NexusGenInputs {
 }
 
 export interface NexusGenEnums {
+  Category: "CUSTOMERS" | "PRODUCTS" | "SALES"
+  OrderStatus: "CANCELLED" | "COMPLETED" | "PENDING"
+  OrderType: "SALE" | "SUBSCRIPTION"
 }
 
 export interface NexusGenRootTypes {
+  Customer: { // root type
+    avatar?: string | null; // String
+    id: string; // ID!
+    name: string; // String!
+  }
+  Filters: { // root type
+    field?: string | null; // String
+    name?: string | null; // String
+    type?: string | null; // String
+    valueList?: NexusGenRootTypes['ValueList'][] | null; // [ValueList!]
+  }
+  Geo: { // root type
+    city?: string | null; // String
+    country?: string | null; // String
+    state?: string | null; // String
+  }
+  Items: { // root type
+    product: NexusGenRootTypes['ProductOrVariant']; // ProductOrVariant!
+    quantity: number; // Int!
+  }
+  OrderDetailEdges: { // root type
+    cursor: string; // String!
+    node?: NexusGenRootTypes['OrderDetails'] | null; // OrderDetails
+  }
+  OrderDetails: { // root type
+    customer?: NexusGenRootTypes['Customer'] | null; // Customer
+    geo?: NexusGenRootTypes['Geo'] | null; // Geo
+    id: string; // ID!
+    items?: NexusGenRootTypes['Items'][] | null; // [Items!]
+    netAmount: number; // Int!
+    orderDate?: any | null; // DateTime
+    status?: NexusGenEnums['OrderStatus'] | null; // OrderStatus
+    type?: NexusGenEnums['OrderType'] | null; // OrderType
+  }
+  Orders: { // root type
+    edges: NexusGenRootTypes['OrderDetailEdges'][]; // [OrderDetailEdges!]!
+    pageInfo: NexusGenRootTypes['PageInfo']; // PageInfo!
+    sortBy?: string | null; // String
+    totalCount: number; // Int!
+  }
+  PageInfo: { // root type
+    endCursor: string; // String!
+    hasNextPage: boolean; // Boolean!
+  }
+  Product: { // root type
+    id: string; // ID!
+    name?: string | null; // String
+  }
+  ProductDetailEdges: { // root type
+    cursor: string; // String!
+    node?: NexusGenRootTypes['ProductOrVariant'] | null; // ProductOrVariant
+  }
+  ProductVariant: { // root type
+    id: string; // ID!
+    name?: string | null; // String
+  }
+  Products: { // root type
+    edges: NexusGenRootTypes['ProductDetailEdges'][]; // [ProductDetailEdges!]!
+    pageInfo: NexusGenRootTypes['PageInfo']; // PageInfo!
+    sortBy?: string | null; // String
+    totalCount: number; // Int!
+  }
   Query: {};
   Stats: { // root type
     averageRevenuePerCustomer?: number | null; // Int
@@ -51,21 +116,97 @@ export interface NexusGenRootTypes {
     sortBy?: string | null; // String
     stats?: NexusGenRootTypes['Stats'] | null; // Stats
   }
+  ValueList: { // root type
+    name?: string | null; // String
+    value?: string | null; // String
+  }
   String: string;
   Int: number;
   Float: number;
   Boolean: boolean;
   ID: string;
+  DateTime: any;
   JSON: any;
+  ProductOrVariant: NexusGenRootTypes['Product'] | NexusGenRootTypes['ProductVariant'];
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
   InputFilter: NexusGenInputs['InputFilter'];
   InputInterval: NexusGenInputs['InputInterval'];
+  Category: NexusGenEnums['Category'];
+  OrderStatus: NexusGenEnums['OrderStatus'];
+  OrderType: NexusGenEnums['OrderType'];
 }
 
 export interface NexusGenFieldTypes {
+  Customer: { // field return type
+    avatar: string | null; // String
+    id: string; // ID!
+    name: string; // String!
+  }
+  Filters: { // field return type
+    field: string | null; // String
+    name: string | null; // String
+    type: string | null; // String
+    valueList: NexusGenRootTypes['ValueList'][] | null; // [ValueList!]
+  }
+  Geo: { // field return type
+    city: string | null; // String
+    country: string | null; // String
+    state: string | null; // String
+  }
+  Items: { // field return type
+    product: NexusGenRootTypes['ProductOrVariant']; // ProductOrVariant!
+    quantity: number; // Int!
+  }
+  OrderDetailEdges: { // field return type
+    cursor: string; // String!
+    node: NexusGenRootTypes['OrderDetails'] | null; // OrderDetails
+  }
+  OrderDetails: { // field return type
+    customer: NexusGenRootTypes['Customer'] | null; // Customer
+    geo: NexusGenRootTypes['Geo'] | null; // Geo
+    id: string; // ID!
+    items: NexusGenRootTypes['Items'][] | null; // [Items!]
+    netAmount: number; // Int!
+    orderDate: any | null; // DateTime
+    status: NexusGenEnums['OrderStatus'] | null; // OrderStatus
+    type: NexusGenEnums['OrderType'] | null; // OrderType
+  }
+  Orders: { // field return type
+    edges: NexusGenRootTypes['OrderDetailEdges'][]; // [OrderDetailEdges!]!
+    pageInfo: NexusGenRootTypes['PageInfo']; // PageInfo!
+    sortBy: string | null; // String
+    totalCount: number; // Int!
+  }
+  PageInfo: { // field return type
+    endCursor: string; // String!
+    hasNextPage: boolean; // Boolean!
+  }
+  Product: { // field return type
+    id: string; // ID!
+    name: string | null; // String
+  }
+  ProductDetailEdges: { // field return type
+    cursor: string; // String!
+    node: NexusGenRootTypes['ProductOrVariant'] | null; // ProductOrVariant
+  }
+  ProductVariant: { // field return type
+    id: string; // ID!
+    name: string | null; // String
+  }
+  Products: { // field return type
+    edges: NexusGenRootTypes['ProductDetailEdges'][]; // [ProductDetailEdges!]!
+    pageInfo: NexusGenRootTypes['PageInfo']; // PageInfo!
+    sortBy: string | null; // String
+    totalCount: number; // Int!
+  }
   Query: { // field return type
+    filters: NexusGenRootTypes['Filters'] | null; // Filters
+    orders: NexusGenRootTypes['Orders'] | null; // Orders
+    product: NexusGenRootTypes['Product'] | null; // Product
+    products: NexusGenRootTypes['Products'] | null; // Products
+    productVariant: NexusGenRootTypes['ProductVariant'] | null; // ProductVariant
     stats: NexusGenRootTypes['Stats'] | null; // Stats
     summary: NexusGenRootTypes['Summary'] | null; // Summary
   }
@@ -94,10 +235,33 @@ export interface NexusGenFieldTypes {
     sortBy: string | null; // String
     stats: NexusGenRootTypes['Stats'] | null; // Stats
   }
+  ValueList: { // field return type
+    name: string | null; // String
+    value: string | null; // String
+  }
 }
 
 export interface NexusGenArgTypes {
   Query: {
+    filters: { // args
+      category?: NexusGenEnums['Category'] | null; // Category
+    }
+    orders: { // args
+      after?: string | null; // String
+      filters?: NexusGenInputs['InputFilter'] | null; // InputFilter
+      first?: number | null; // Int
+      interval?: NexusGenInputs['InputInterval'] | null; // InputInterval
+      limit?: number | null; // Int
+      sortBy?: string | null; // String
+    }
+    products: { // args
+      after?: string | null; // String
+      filters?: NexusGenInputs['InputFilter'] | null; // InputFilter
+      first?: number | null; // Int
+      interval?: NexusGenInputs['InputInterval'] | null; // InputInterval
+      limit?: number | null; // Int
+      sortBy?: string | null; // String
+    }
     stats: { // args
       filters?: NexusGenInputs['InputFilter'] | null; // InputFilter
       interval?: NexusGenInputs['InputInterval'] | null; // InputInterval
@@ -113,21 +277,22 @@ export interface NexusGenArgTypes {
 }
 
 export interface NexusGenAbstractResolveReturnTypes {
+  ProductOrVariant: "Product" | "ProductVariant"
 }
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Query" | "Stats" | "Summary";
+export type NexusGenObjectNames = "Customer" | "Filters" | "Geo" | "Items" | "OrderDetailEdges" | "OrderDetails" | "Orders" | "PageInfo" | "Product" | "ProductDetailEdges" | "ProductVariant" | "Products" | "Query" | "Stats" | "Summary" | "ValueList";
 
 export type NexusGenInputNames = "InputFilter" | "InputInterval";
 
-export type NexusGenEnumNames = never;
+export type NexusGenEnumNames = "Category" | "OrderStatus" | "OrderType";
 
 export type NexusGenInterfaceNames = never;
 
-export type NexusGenScalarNames = "Boolean" | "Float" | "ID" | "Int" | "JSON" | "String";
+export type NexusGenScalarNames = "Boolean" | "DateTime" | "Float" | "ID" | "Int" | "JSON" | "String";
 
-export type NexusGenUnionNames = never;
+export type NexusGenUnionNames = "ProductOrVariant";
 
 export interface NexusGenTypes {
   context: any;

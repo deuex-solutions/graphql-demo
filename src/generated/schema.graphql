@@ -2,6 +2,34 @@
 ### Do not make changes to this file directly
 
 
+enum Category {
+  CUSTOMERS
+  PRODUCTS
+  SALES
+}
+
+type Customer {
+  avatar: String
+  id: ID!
+  name: String!
+}
+
+"""Use JavaScript Date object for date/time fields."""
+scalar DateTime
+
+type Filters {
+  field: String
+  name: String
+  type: String
+  valueList: [ValueList!]
+}
+
+type Geo {
+  city: String
+  country: String
+  state: String
+}
+
 input InputFilter {
   filter: JSON
 }
@@ -10,12 +38,85 @@ input InputInterval {
   interval: JSON
 }
 
+type Items {
+  product: ProductOrVariant!
+  quantity: Int!
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
 scalar JSON
 
+type OrderDetailEdges {
+  cursor: String!
+  node: OrderDetails
+}
+
+type OrderDetails {
+  customer: Customer
+  geo: Geo
+  id: ID!
+  items: [Items!]
+  netAmount: Int!
+  orderDate: DateTime
+  status: OrderStatus
+  type: OrderType
+}
+
+type Orders {
+  edges: [OrderDetailEdges!]!
+  pageInfo: PageInfo!
+  sortBy: String
+  totalCount: Int!
+}
+
+enum OrderStatus {
+  CANCELLED
+  COMPLETED
+  PENDING
+}
+
+enum OrderType {
+  SALE
+  SUBSCRIPTION
+}
+
+type PageInfo {
+  endCursor: String!
+  hasNextPage: Boolean!
+}
+
+type Product {
+  id: ID!
+  name: String
+}
+
+type ProductDetailEdges {
+  cursor: String!
+  node: ProductOrVariant
+}
+
+union ProductOrVariant = Product | ProductVariant
+
+type Products {
+  edges: [ProductDetailEdges!]!
+  pageInfo: PageInfo!
+  sortBy: String
+  totalCount: Int!
+}
+
+type ProductVariant {
+  id: ID!
+  name: String
+}
+
 type Query {
+  filters(category: Category): Filters
+  orders(after: String, filters: InputFilter, first: Int, interval: InputInterval, limit: Int, sortBy: String): Orders
+  product: Product
+  products(after: String, filters: InputFilter, first: Int, interval: InputInterval, limit: Int, sortBy: String): Products
+  productVariant: ProductVariant
   stats(filters: InputFilter, interval: InputInterval): Stats
   summary(filters: InputFilter, groupBy: String, interval: InputInterval, limit: Int, sortBy: String): Summary
 }
@@ -45,4 +146,9 @@ type Summary {
   limit: Int
   sortBy: String
   stats: Stats
+}
+
+type ValueList {
+  name: String
+  value: String
 }
