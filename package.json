@@ -19,7 +19,7 @@
   "homepage": "https://github.com/deuex-solutions/graphql-demo#readme",
   "dependencies": {
     "@okgrow/graphql-scalars": "^0.4.5",
-    "apollo-server-express": "^2.6.3",
+    "apollo-server-express": "^2.14.2",
     "express": "^4.17.1",
     "faker": "^4.1.0",
     "graphql": "^14.3.1",
